@@ -14,7 +14,7 @@ OBJECTS := $(patsubst $(SRC)/%,$(BUILD)/%,$(SOURCES:.$(SRCEXT)=.o))
 #Linking Object Files
 $(BIN)/$(TARGET): $(OBJECTS)
 	@echo "🔗 Linking Object Files..."
-	$(CC) $(OBJECTS) -o $(BIN)/$(TARGET) -std=c++11 -I include/Eigen
+	$(CC) $(OBJECTS) -o $(BIN)/$(TARGET) -std=c++11
 #Compiling Object Files
 $(BUILD)/%.o : $(SRC)/%.cpp   
 	@echo "🚧 Building (Compiling Object Files)..."
@@ -23,7 +23,7 @@ $(BUILD)/%.o : $(SRC)/%.cpp
 run:
 	clear
 	@echo "🚀 Executing..."
-	./$(BIN)/$(TARGET) Gradient_Numbers_PPMS -k 10 -bin 1
+	./$(BIN)/$(TARGET)
 
 # deletes all the object code files as well as the previously generated outputs
 clean:
