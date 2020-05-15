@@ -9,6 +9,8 @@ namespace CHNJAR003
     class PCA
     {
     private:
+        std::vector<Eigen::Vector2d> dataset;
+        Eigen::Matrix2d covarianceMatrix;
         std::vector<double> januaryData;
         std::vector<double> julyData;
 
@@ -16,7 +18,7 @@ namespace CHNJAR003
         PCA();
         ~PCA();
         void readInputData(std::string fileName);
-        void computeCovarianceMatrix();
+        void calculateCovarianceMatrix();
         void computeEigenValues();
         void computeEigenVectors();
         void computeTotalVariance();

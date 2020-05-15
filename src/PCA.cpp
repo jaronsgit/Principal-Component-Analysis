@@ -46,6 +46,11 @@ namespace CHNJAR003
                 ++lineCount;
             }
             dataFile.close();
+
+            for (int i = 0; i < januaryData.size(); ++i)
+            {
+                dataset.push_back(Eigen::Vector2d(januaryData[i], julyData[i]));
+            }
         }
         else
         {
@@ -54,5 +59,29 @@ namespace CHNJAR003
         //std::copy(januaryData.begin(), januaryData.end(), std::ostream_iterator<double>(std::cout, ", "));
         //std::cout << std::endl << std::endl;
         //std::copy(julyData.begin(), julyData.end(), std::ostream_iterator<double>(std::cout, ", "));
+    }
+
+    void PCA::calculateCovarianceMatrix()
+    {
+        Eigen::Vector2d mean(0.0, 0.0);
+
+        //std::cout << "original data:\n";
+        for (auto const &dataPoint : dataset)
+        {
+            mean += dataPoint;
+            //std::cout << dataPoint << std::endl;
+        }
+
+        int numDataPoints = dataset.size();
+        mean /= numDataPoints;
+
+        Eigen::MatrixXd meanSubtractedMatrix(2, numDataPoints);
+
+        for (int i = 0; i < numDataPoints; ++i)
+        {
+            meanSubtractedMatrix.col(i) = (dataset[i] - mean);
+        }
+
+        //std::cout << meanSubtractedMatrix * meanSubtractedMatrix.transpose() / (numDataPoints - 1) << std::endl;
     }
 } // namespace CHNJAR003
