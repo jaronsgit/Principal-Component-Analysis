@@ -82,6 +82,55 @@ namespace CHNJAR003
             meanSubtractedMatrix.col(i) = (dataset[i] - mean);
         }
 
-        //std::cout << meanSubtractedMatrix * meanSubtractedMatrix.transpose() / (numDataPoints - 1) << std::endl;
+        covarianceMatrix = meanSubtractedMatrix * meanSubtractedMatrix.transpose() / (numDataPoints - 1);
+
+        //std::cout << covarianceMatrix << std::endl;
+    }
+
+    void PCA::calculateEigenvaluesAndVectors(void)
+    {
+        Eigen::EigenSolver<Eigen::MatrixXd> eigenSolver(covarianceMatrix);
+        //std::cout << eigenSolver.eigenvalues().real()[0];
+        //std::cout << eigenSolver.eigenvalues().real()[1];
+
+        componentEigenvalues.push_back(eigenSolver.eigenvalues().real()[0]);
+        componentEigenvalues.push_back(eigenSolver.eigenvalues().real()[1]);
+
+        //eigenVals.push_back(eigenSolver.eigenvalues()[0].real());
+        //eigenVals.push_back(eigenSolver.eigenvalues()[1].real());
+        //std::cout << "Eigenvalues:\n"<< eigenSolver.eigenvalues().real();
+        //std::cout << "Eigenvectors:\n"<< eigenSolver.eigenvectors().real() << std::endl;
+
+        componentEigenvectors.push_back(eigenSolver.eigenvectors().real().col(0));
+        componentEigenvectors.push_back(eigenSolver.eigenvectors().real().col(1));
+    }
+
+    void PCA::calculateTotalVariance(void)
+    {
+        totVariance = covarianceMatrix(0, 0) + covarianceMatrix(1, 1); //Sum of the variances of the features along the diagonal of the covariance matrix
+    }
+
+    void PCA::calculateExplainedVariance(void)
+    {
+    }
+
+    std::ostream &operator<<(std::ostream &os, const PCA &pca)
+    {
+
+        os << "1. What are the Eigenvalues for the principal components 1 and 2?\n\n";
+        os << "Eigenvalue 1:\t" << pca.componentEigenvalues[0] << std::endl;
+        os << "Eigenvalue 2:\t" << pca.componentEigenvalues[1] << std::endl;
+        os << "\n2. What are the Eigenvectors for the principal components 1 and 2 (showing July and January component values for each)?\n\n";
+        os << "Eigenvector 1:\n"
+           << pca.componentEigenvectors[0] << std::endl;
+        os << "Eigenvector 2:\n"
+           << pca.componentEigenvectors[1] << std::endl;
+        os << "\n3. Compute the values for the covariance matrix.\n\n";
+        os << "Covariance matrix:\n"
+           << pca.covarianceMatrix << std::endl;
+        os << "\n4. What is the total variance?\n\n";
+        os << pca.totVariance << std::endl;
+
+        return os;
     }
 } // namespace CHNJAR003
