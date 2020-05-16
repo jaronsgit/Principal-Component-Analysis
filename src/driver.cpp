@@ -11,7 +11,7 @@ int main(int argc, char *argv[])
     analyser.calculateExplainedVariance();
     std::cout << analyser;
 
-    std::cout << "Writing results to \"results.txt\".";
+    std::cout << "Writing results to \"results.txt\".\n";
     std::ofstream resultsFile;
     resultsFile.open("results.txt");
     resultsFile << analyser;
