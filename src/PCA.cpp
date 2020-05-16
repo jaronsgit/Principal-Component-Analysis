@@ -32,12 +32,12 @@ namespace CHNJAR003
                 {
                     if (lineCount % 3 == 1)
                     {
-                        //std::cout << "Jan: " << line << std::endl;
+
                         januaryData.push_back(std::stod(line));
                     }
                     else
                     {
-                        //std::cout << "July: " << line << std::endl;
+
                         julyData.push_back(std::stod(line));
                     }
 
@@ -56,20 +56,15 @@ namespace CHNJAR003
         {
             std::cout << "Could not open data file for reading." << std::endl;
         }
-        //std::copy(januaryData.begin(), januaryData.end(), std::ostream_iterator<double>(std::cout, ", "));
-        //std::cout << std::endl << std::endl;
-        //std::copy(julyData.begin(), julyData.end(), std::ostream_iterator<double>(std::cout, ", "));
     }
 
     void PCA::calculateCovarianceMatrix()
     {
         Eigen::Vector2d mean(0.0, 0.0);
 
-        //std::cout << "original data:\n";
         for (auto const &dataPoint : dataset)
         {
             mean += dataPoint;
-            //std::cout << dataPoint << std::endl;
         }
 
         int numDataPoints = dataset.size();
@@ -83,23 +78,14 @@ namespace CHNJAR003
         }
 
         covarianceMatrix = meanSubtractedMatrix * meanSubtractedMatrix.transpose() / (numDataPoints - 1);
-
-        //std::cout << covarianceMatrix << std::endl;
     }
 
     void PCA::calculateEigenvaluesAndVectors(void)
     {
         Eigen::EigenSolver<Eigen::MatrixXd> eigenSolver(covarianceMatrix);
-        //std::cout << eigenSolver.eigenvalues().real()[0];
-        //std::cout << eigenSolver.eigenvalues().real()[1];
 
         componentEigenvalues.push_back(eigenSolver.eigenvalues().real()[0]);
         componentEigenvalues.push_back(eigenSolver.eigenvalues().real()[1]);
-
-        //eigenVals.push_back(eigenSolver.eigenvalues()[0].real());
-        //eigenVals.push_back(eigenSolver.eigenvalues()[1].real());
-        //std::cout << "Eigenvalues:\n"<< eigenSolver.eigenvalues().real();
-        //std::cout << "Eigenvectors:\n"<< eigenSolver.eigenvectors().real() << std::endl;
 
         componentEigenvectors.push_back(eigenSolver.eigenvectors().real().col(0));
         componentEigenvectors.push_back(eigenSolver.eigenvectors().real().col(1));
