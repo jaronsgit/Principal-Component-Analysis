@@ -112,6 +112,11 @@ namespace CHNJAR003
 
     void PCA::calculateExplainedVariance(void)
     {
+        double PC1Eigenval = std::max(componentEigenvalues[0], componentEigenvalues[1]);
+        double PC2Eigenval = std::min(componentEigenvalues[0], componentEigenvalues[1]);
+
+        explainedVariance.push_back((PC1Eigenval / totVariance) * 100);
+        explainedVariance.push_back((PC2Eigenval / totVariance) * 100);
     }
 
     std::ostream &operator<<(std::ostream &os, const PCA &pca)
@@ -130,7 +135,9 @@ namespace CHNJAR003
            << pca.covarianceMatrix << std::endl;
         os << "\n4. What is the total variance?\n\n";
         os << pca.totVariance << std::endl;
-
+        os << "\n5. What proportion (as a percentage) of total variance do principal components 1 and 2 \"explain\"?\n\n";
+        os << "Principal Component 1 explains: " << pca.explainedVariance[0] << "%\n";
+        os << "Principal Component 2 explains: " << pca.explainedVariance[1] << "%\n";
         return os;
     }
 } // namespace CHNJAR003

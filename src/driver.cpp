@@ -7,5 +7,6 @@ int main(int argc, char *argv[])
     temp.calculateCovarianceMatrix();
     temp.calculateEigenvaluesAndVectors();
     temp.calculateTotalVariance();
+    temp.calculateExplainedVariance();
     std::cout << temp;
 }

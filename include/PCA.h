@@ -16,7 +16,7 @@ namespace CHNJAR003
         Eigen::Matrix2d covarianceMatrix;                   //Stores the calculated covariance matrix
         std::vector<double> componentEigenvalues;           //Stores the calculated real-valued eigenvalues of the covariance matrix
         std::vector<Eigen::Vector2d> componentEigenvectors; //Stores the calculated real-valued eigenvectors of the covariance matrix
-
+        std::vector<double> explainedVariance;              //Stores the calculated amount of variace "explained" by each principal component
         double totVariance;
 
     public:
