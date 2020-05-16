@@ -47,6 +47,7 @@ namespace CHNJAR003
             }
             dataFile.close();
 
+            //Store the data as two-dimensional data points
             for (int i = 0; i < januaryData.size(); ++i)
             {
                 dataset.push_back(Eigen::Vector2d(januaryData[i], julyData[i]));
@@ -60,7 +61,7 @@ namespace CHNJAR003
 
     void PCA::calculateCovarianceMatrix()
     {
-        Eigen::Vector2d mean(0.0, 0.0);
+        Eigen::Vector2d mean(0.0, 0.0); //Mean 2D data point - first value holds Jan mean and second holds July mean
 
         for (auto const &dataPoint : dataset)
         {
@@ -70,11 +71,11 @@ namespace CHNJAR003
         int numDataPoints = dataset.size();
         mean /= numDataPoints;
 
-        Eigen::MatrixXd meanSubtractedMatrix(2, numDataPoints);
+        Eigen::MatrixXd meanSubtractedMatrix(2, numDataPoints); //2 rows and 64 columns in the case of this dataset - make calculation easier to follow
 
         for (int i = 0; i < numDataPoints; ++i)
         {
-            meanSubtractedMatrix.col(i) = (dataset[i] - mean);
+            meanSubtractedMatrix.col(i) = dataset[i] - mean;
         }
 
         covarianceMatrix = meanSubtractedMatrix * meanSubtractedMatrix.transpose() / (numDataPoints - 1);
